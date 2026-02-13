@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Cyan Karimi</title>
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ff85a1;
+            --text: #590d22;
+        }
+
+        body {
+            margin: 0; padding: 0; display: flex; justify-content: center;
+            align-items: center; height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; color: var(--text);
+            /* Animated Gradient Background */
+            background: linear-gradient(-45deg, #ffb3c1, #fff0f3, #ff85a1, #f8ad9d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center; background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px); padding: 3rem; border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            z-index: 10; width: 400px; position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        h1 { font-size: 2rem; margin-bottom: 10px; color: var(--primary); }
+        #message { font-size: 1.1rem; line-height: 1.5; min-height: 80px; margin-bottom: 20px; }
+
+        .btn {
+            background: var(--primary); color: white; border: none;
+            padding: 15px 30px; font-size: 1rem; border-radius: 50px;
+            cursor: pointer; transition: 0.3s; font-weight: bold;
+        }
+
+        .btn:hover { transform: scale(1.1); background: #ff758f; }
+
+        #noBtn { background: #6c757d; position: absolute; }
+
+        .emoji-float {
+            position: absolute; pointer-events: none; z-index: 1;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .apology-box {
+            border-left: 4px solid var(--primary);
+            background: rgba(255, 77, 109, 0.05);
+            padding: 10px; font-style: italic; font-size: 0.95rem;
+            margin-top: 15px; display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="icon" style="font-size: 4rem; margin-bottom: 10px;">👋</div>
+        <h1 id="title">Cyan Karimi!</h1>
+        <p id="message">I have a few very serious, high-stakes questions for you...</p>
+        
+        <div id="apology" class="apology-box">
+            "Cyan, I know I made promises I didn't keep, and I'm so sorry. It weighs on my heart because you deserve the world and more. Please forgive me."
+        </div>
+
+        <div id="controls">
+            <button class="btn" id="mainBtn" onclick="nextStep()">Start the Trial 👩‍⚖️</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const title = document.getElementById('title');
+        const message = document.getElementById('message');
+        const icon = document.getElementById('icon');
+        const controls = document.getElementById('controls');
+        const apology = document.getElementById('apology');
+
+        const content = [
+            {
+                t: "Question #1",
+                m: "On a scale of 1 to 10, how much of a headache am I? (Be honest, but remember I have your snacks hostage).",
+                i: "🤔",
+                b: "A solid 11/10"
+            },
+            {
+                t: "Question #2",
+                m: "If we were in a zombie apocalypse, would you let me hide behind you? 🧟‍♂️",
+                i: "🧟‍♀️",
+                b: "Obviously, you're the bait"
+            },
+            {
+                t: "Wait, Cyan...",
+                m: "Before the last question, I need to be real with you for a second. I've been thinking about my promises lately.",
+                i: "🥺",
+                b: "Listen to me..."
+            }
+        ];
+
+        function nextStep() {
+            if (currentStep < content.length) {
+                const item = content[currentStep];
+                title.innerText = item.t;
+                message.innerText = item.m;
+                icon.innerText = item.i;
+                document.getElementById('mainBtn').innerText = item.b;
+
+                // Trigger apology display on the 3rd step
+                if(currentStep === 2) {
+                    apology.style.display = "block";
+                }
+                
+                currentStep++;
+            } else {
+                theBigAsk();
+            }
+        }
+
+        function theBigAsk() {
+            apology.style.display = "none";
+            title.innerText = "The Real Question";
+            message.innerText = "Cyan Karimi, despite my broken promises and my 11/10 headache status... Will you be my Valentine?";
+            icon.innerText = "💍";
+            controls.innerHTML = `
+                <button class="btn" onclick="celebrate()">YES! ❤️</button>
+                <button class="btn" id="noBtn" onmouseover="moveNo()">Absolutely Not</button>
+            `;
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        }
+
+        function celebrate() {
+            title.innerText = "She Said Yes! 🎉";
+            message.innerText = "I promise to do better and make you smile every day, Cyan. I love you!";
+            icon.innerText = "👩‍❤️‍👨";
+            controls.innerHTML = "";
+            setInterval(spawnEmoji, 100);
+        }
+
+        function spawnEmoji() {
+            const emojis = ['❤️', '💖', '✨', '🔥', '🌸', '🍩', '🍕'];
+            const e = document.createElement('div');
+            e.classList.add('emoji-float');
+            e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.fontSize = (Math.random() * 30 + 10) + 'px';
+            e.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(e);
+            setTimeout(() => e.remove(), 5000);
+        }
+
+        // Background subtle hearts
+        setInterval(spawnEmoji, 700);
+    </script>
+</body>
+</html>
