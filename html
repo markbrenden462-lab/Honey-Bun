@@ -3,86 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Cyan Karimi</title>
+    <title>For Cyan Karimi - Enhanced</title>
     <style>
         :root {
             --primary: #ff4d6d;
             --secondary: #ff85a1;
             --text: #590d22;
         }
-
+        * { box-sizing: border-box; }
         body {
             margin: 0; padding: 0; display: flex; justify-content: center;
-            align-items: center; height: 100vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            align-items: center; height: 100vh; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden; color: var(--text);
-            /* Animated Gradient Background */
             background: linear-gradient(-45deg, #ffb3c1, #fff0f3, #ff85a1, #f8ad9d);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            position: relative;
         }
-
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
+        .heart-bg {
+            position: absolute; width: 100%; height: 100%;
+            overflow: hidden; pointer-events: none; z-index: 0;
+        }
         .container {
-            text-align: center; background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px); padding: 3rem; border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            z-index: 10; width: 400px; position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center; background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px); padding: 3rem; border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 77, 109, 0.3),
+                        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            z-index: 10; max-width: 500px; width: 90%; position: relative;
+            animation: containerEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        h1 { font-size: 2rem; margin-bottom: 10px; color: var(--primary); }
-        #message { font-size: 1.1rem; line-height: 1.5; min-height: 80px; margin-bottom: 20px; }
-
+        @keyframes containerEntry {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .container.pulse { animation: heartbeat 0.6s ease-in-out; }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.05); }
+            50% { transform: scale(0.98); }
+            75% { transform: scale(1.02); }
+        }
+        #icon {
+            font-size: 4rem; margin-bottom: 10px; display: inline-block;
+            animation: iconBounce 2s ease-in-out infinite;
+            filter: drop-shadow(0 5px 15px rgba(255, 77, 109, 0.3));
+        }
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(-5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(5deg); }
+        }
+        h1 { 
+            font-size: 2.2rem; margin-bottom: 10px; color: var(--primary);
+            animation: fadeInDown 0.6s ease-out 0.2s backwards;
+            text-shadow: 2px 2px 4px rgba(255, 77, 109, 0.2);
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #message { 
+            font-size: 1.1rem; line-height: 1.6; min-height: 80px; 
+            margin-bottom: 20px; animation: fadeIn 0.6s ease-out 0.4s backwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
         .btn {
-            background: var(--primary); color: white; border: none;
-            padding: 15px 30px; font-size: 1rem; border-radius: 50px;
-            cursor: pointer; transition: 0.3s; font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; border: none; padding: 15px 35px; font-size: 1rem; 
+            border-radius: 50px; cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: bold; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            position: relative; overflow: hidden;
+            animation: fadeIn 0.6s ease-out 0.6s backwards;
         }
-
-        .btn:hover { transform: scale(1.1); background: #ff758f; }
-
-        #noBtn { background: #6c757d; position: absolute; }
-
+        .btn::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 0; height: 0; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn:hover::before { width: 300px; height: 300px; }
+        .btn:hover { 
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.5);
+        }
+        .btn:active { transform: scale(1.05) translateY(0); }
+        #noBtn { 
+            background: linear-gradient(135deg, #6c757d, #8b959e);
+            position: absolute;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #controls { position: relative; min-height: 50px; }
+        .apology-box {
+            border-left: 4px solid var(--primary);
+            background: linear-gradient(135deg, rgba(255, 77, 109, 0.08), rgba(255, 133, 161, 0.08));
+            padding: 15px; font-style: italic; font-size: 0.95rem;
+            margin-top: 15px; display: none; border-radius: 8px;
+            animation: slideInLeft 0.5s ease-out;
+            box-shadow: 0 2px 10px rgba(255, 77, 109, 0.1);
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
         .emoji-float {
             position: absolute; pointer-events: none; z-index: 1;
             animation: floatUp linear forwards;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
         }
-
         @keyframes floatUp {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(110vh) rotate(0deg) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: translateY(100vh) rotate(45deg) scale(1); }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg) scale(0.5); opacity: 0; }
         }
-
-        .apology-box {
-            border-left: 4px solid var(--primary);
-            background: rgba(255, 77, 109, 0.05);
-            padding: 10px; font-style: italic; font-size: 0.95rem;
-            margin-top: 15px; display: none;
+        .confetti {
+            position: absolute; width: 10px; height: 10px;
+            background: var(--primary); animation: confettiFall linear forwards;
+            pointer-events: none; z-index: 100;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+        .sparkle {
+            position: absolute; width: 4px; height: 4px;
+            background: white; border-radius: 50%; pointer-events: none;
+            animation: sparkleAnim 1s ease-out forwards;
+            box-shadow: 0 0 6px white; z-index: 100;
+        }
+        @keyframes sparkleAnim {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            50% { opacity: 1; }
+            100% { transform: scale(1) rotate(180deg); opacity: 0; }
+        }
+        .glow { animation: glowPulse 2s ease-in-out infinite; }
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 20px 60px rgba(255, 77, 109, 0.3),
+                            0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            }
+            50% {
+                box-shadow: 0 20px 80px rgba(255, 77, 109, 0.6),
+                            0 0 20px rgba(255, 77, 109, 0.4),
+                            0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            }
+        }
+        .ripple {
+            position: absolute; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0); animation: rippleEffect 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes rippleEffect {
+            to { transform: scale(4); opacity: 0; }
+        }
+        .fade-out { animation: fadeOut 0.3s ease-out forwards; }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: scale(0.95); }
+        }
+        .fade-in { animation: fadeInScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <div id="icon" style="font-size: 4rem; margin-bottom: 10px;">👋</div>
+    <div class="heart-bg" id="heartBg"></div>
+    <div class="container" id="mainContainer">
+        <div id="icon">👋</div>
         <h1 id="title">Cyan Karimi!</h1>
         <p id="message">I have a few very serious, high-stakes questions for you...</p>
-        
         <div id="apology" class="apology-box">
             "Cyan, I know I made promises I didn't keep, and I'm so sorry. It weighs on my heart because you deserve the world and more. Please forgive me."
         </div>
-
         <div id="controls">
             <button class="btn" id="mainBtn" onclick="nextStep()">Start the Trial 👩‍⚖️</button>
         </div>
     </div>
-
     <script>
         let currentStep = 0;
         const title = document.getElementById('title');
@@ -90,86 +200,150 @@
         const icon = document.getElementById('icon');
         const controls = document.getElementById('controls');
         const apology = document.getElementById('apology');
-
+        const container = document.getElementById('mainContainer');
         const content = [
-            {
-                t: "Question #1",
-                m: "On a scale of 1 to 10, how much of a headache am I? (Be honest, but remember I have your snacks hostage).",
-                i: "🤔",
-                b: "A solid 11/10"
-            },
-            {
-                t: "Question #2",
-                m: "If we were in a zombie apocalypse, would you let me hide behind you? 🧟‍♂️",
-                i: "🧟‍♀️",
-                b: "Obviously, you're the bait"
-            },
-            {
-                t: "Wait, Cyan...",
-                m: "Before the last question, I need to be real with you for a second. I've been thinking about my promises lately.",
-                i: "🥺",
-                b: "Listen to me..."
-            }
+            {t: "Question #1", m: "On a scale of 1 to 10, how much of a headache am I? (Be honest, but remember I have your snacks hostage).", i: "🤔", b: "A solid 11/10"},
+            {t: "Question #2", m: "If we were in a zombie apocalypse, would you let me hide behind you? 🧟‍♂️", i: "🧟‍♀️", b: "Obviously, you're the bait"},
+            {t: "Wait, Cyan...", m: "Before the last question, I need to be real with you for a second. I've been thinking about my promises lately.", i: "🥺", b: "Listen to me..."}
         ];
-
+        function createRipple(e) {
+            const button = e.currentTarget;
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            button.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+        function smoothTransition(callback) {
+            title.classList.add('fade-out');
+            message.classList.add('fade-out');
+            icon.classList.add('fade-out');
+            setTimeout(() => {
+                callback();
+                title.classList.remove('fade-out');
+                message.classList.remove('fade-out');
+                icon.classList.remove('fade-out');
+                title.classList.add('fade-in');
+                message.classList.add('fade-in');
+                icon.classList.add('fade-in');
+                setTimeout(() => {
+                    title.classList.remove('fade-in');
+                    message.classList.remove('fade-in');
+                    icon.classList.remove('fade-in');
+                }, 500);
+            }, 300);
+        }
         function nextStep() {
+            container.classList.add('pulse');
+            setTimeout(() => container.classList.remove('pulse'), 600);
             if (currentStep < content.length) {
-                const item = content[currentStep];
-                title.innerText = item.t;
-                message.innerText = item.m;
-                icon.innerText = item.i;
-                document.getElementById('mainBtn').innerText = item.b;
-
-                // Trigger apology display on the 3rd step
-                if(currentStep === 2) {
-                    apology.style.display = "block";
-                }
-                
-                currentStep++;
+                smoothTransition(() => {
+                    const item = content[currentStep];
+                    title.innerText = item.t;
+                    message.innerText = item.m;
+                    icon.innerText = item.i;
+                    document.getElementById('mainBtn').innerText = item.b;
+                    if(currentStep === 2) apology.style.display = "block";
+                    currentStep++;
+                });
             } else {
                 theBigAsk();
             }
         }
-
         function theBigAsk() {
-            apology.style.display = "none";
-            title.innerText = "The Real Question";
-            message.innerText = "Cyan Karimi, despite my broken promises and my 11/10 headache status... Will you be my Valentine?";
-            icon.innerText = "💍";
-            controls.innerHTML = `
-                <button class="btn" onclick="celebrate()">YES! ❤️</button>
-                <button class="btn" id="noBtn" onmouseover="moveNo()">Absolutely Not</button>
-            `;
+            smoothTransition(() => {
+                apology.style.display = "none";
+                title.innerText = "The Real Question";
+                message.innerText = "Cyan Karimi, despite my broken promises and my 11/10 headache status... Will you be my Valentine?";
+                icon.innerText = "💍";
+                controls.innerHTML = '<button class="btn" onclick="celebrate(event)" style="margin:5px;">YES! ❤️</button><button class="btn" id="noBtn" onmouseover="moveNo()" style="margin:5px;">Absolutely Not</button>';
+            });
         }
-
         function moveNo() {
             const btn = document.getElementById('noBtn');
-            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            const maxX = window.innerWidth - 150;
+            const maxY = window.innerHeight - 100;
+            btn.style.left = Math.random() * maxX + 'px';
+            btn.style.top = Math.random() * maxY + 'px';
+            btn.style.animation = 'none';
+            setTimeout(() => btn.style.animation = 'iconBounce 0.5s ease-in-out', 10);
         }
-
-        function celebrate() {
-            title.innerText = "She Said Yes! 🎉";
-            message.innerText = "I promise to do better and make you smile every day, Cyan. I love you!";
-            icon.innerText = "👩‍❤️‍👨";
-            controls.innerHTML = "";
-            setInterval(spawnEmoji, 100);
+        function celebrate(e) {
+            createRipple(e);
+            setTimeout(() => {
+                smoothTransition(() => {
+                    title.innerText = "She Said Yes! 🎉";
+                    message.innerText = "I promise to do better and make you smile every day, Cyan. I love you!";
+                    icon.innerText = "👩‍❤️‍👨";
+                    controls.innerHTML = "";
+                    container.classList.add('glow');
+                    setInterval(spawnEmoji, 150);
+                    launchConfetti();
+                    createSparkles();
+                });
+            }, 300);
         }
-
         function spawnEmoji() {
-            const emojis = ['❤️', '💖', '✨', '🔥', '🌸', '🍩', '🍕'];
+            const emojis = ['❤️', '💖', '✨', '🔥', '🌸', '🍩', '🍕', '💝', '🌹', '💕'];
             const e = document.createElement('div');
             e.classList.add('emoji-float');
             e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
             e.style.left = Math.random() * 100 + 'vw';
-            e.style.fontSize = (Math.random() * 30 + 10) + 'px';
-            e.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            e.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            e.style.animationDuration = (Math.random() * 3 + 3) + 's';
             document.body.appendChild(e);
-            setTimeout(() => e.remove(), 5000);
+            setTimeout(() => e.remove(), 6000);
         }
-
-        // Background subtle hearts
-        setInterval(spawnEmoji, 700);
+        function launchConfetti() {
+            const colors = ['#ff4d6d', '#ff85a1', '#ffb3c1', '#ffc6d9', '#fff0f3'];
+            for(let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+            setTimeout(launchConfetti, 3000);
+        }
+        function createSparkles() {
+            setInterval(() => {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                const rect = container.getBoundingClientRect();
+                sparkle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                sparkle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 1000);
+            }, 200);
+        }
+        function createBackgroundHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerText = '💕';
+                heart.style.position = 'absolute';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '110vh';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.opacity = '0.3';
+                heart.style.animation = 'floatUp ' + (Math.random() * 5 + 8) + 's linear forwards';
+                heart.style.pointerEvents = 'none';
+                document.getElementById('heartBg').appendChild(heart);
+                setTimeout(() => heart.remove(), 13000);
+            }, 1000);
+        }
+        createBackgroundHearts();
+        document.getElementById('mainBtn').addEventListener('click', createRipple);
     </script>
 </body>
 </html>
